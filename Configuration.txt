@@ -1,2 +1,2 @@
-database_file	path
-Label_Generator.db	C:/Users/nicho/Documents/Coding Projects/Label_Generator/
+path	database_file	protocol_file	sampletypes_file
+C:/Users/nicho/Documents/Work/VA/Coding_Projects/Label-Generator/	Label_Generator.db	Protocols.txt	SampleTypes.txt
