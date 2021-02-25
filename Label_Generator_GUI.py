@@ -16,6 +16,7 @@ class LabelGeneratorGUI:
 
         self.protocol = StringVar(self.root)
         self.sample_type = StringVar(self.root)
+        self.page_count = IntVar(self.root)
 
         self.create_components()
 
@@ -34,6 +35,23 @@ class LabelGeneratorGUI:
         Label(self.root, text='Sample Type', width=30, anchor='w').grid(row=2, column=0)
         self.sample_type.set(sample_types[0])
         OptionMenu(self.root, self.sample_type, *sample_types).grid(row=2, column=1)
+
+        # Create GUI Label Number Entry
+        Label(self.root, text='Number of Sheets (85 labels each)', width=30, anchor='w').grid(row=3, column=0)
+        Entry(self.root, textvariable=self.page_count).grid(row=3, column=1)
+
+        # Create GUI Get Labels Button
+        Button(self.root, text='Get Labels', command=self.create_labels).grid(row=4, column=1)
+
+        # Create GUI Exit Button
+        Button(self.root, text='Exit', command=self.exit).grid(row=5, column=0)
+
+    def create_labels(self):
+        print('To do')
+
+    def exit(self):
+        self.label_generator.disconnect()
+        self.root.destroy()
 
 
 

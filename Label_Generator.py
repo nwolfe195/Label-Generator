@@ -12,3 +12,6 @@ class LabelGenerator:
         self.database = database
         self.connection = sqlite3.connect(self.database)
         self.cursor = self.connection.cursor()
+
+    def disconnect(self):
+        self.connection.close()
