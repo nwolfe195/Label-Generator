@@ -1,0 +1,2 @@
+database_file	path
+Label_Generator.db	C:/Users/nicho/Documents/Coding Projects/Label_Generator/
