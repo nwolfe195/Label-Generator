@@ -15,3 +15,6 @@ class LabelGenerator:
 
     def disconnect(self):
         self.connection.close()
+
+    def generate_labels(self, quantity, project, sample_type):
+        print('To do')

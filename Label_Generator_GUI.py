@@ -47,13 +47,20 @@ class LabelGeneratorGUI:
         Button(self.root, text='Exit', command=self.exit).grid(row=5, column=0)
 
     def create_labels(self):
-        print('To do')
+        message = self.label_generator.generate_labels(self.page_count.get(), self.protocol.get(), self.sample_type.get())
+        self.popup_message([message])
+
+    def popup_message(self, message_list):
+        popup = Tk()
+        popup.title('!')
+        for r in range(len(message_list)):
+            Label(popup, text=message_list[r]).grid(row=r, column=0)
+        Button(popup, text='Close', command=popup.destroy).grid(row=len(message_list), column=0)
+        popup.mainloop()
 
     def exit(self):
         self.label_generator.disconnect()
         self.root.destroy()
-
-
 
 
 root = Tk()
