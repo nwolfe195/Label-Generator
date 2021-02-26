@@ -1,8 +1,0 @@
-SampleTypes
-Serum
-Plasma
-Buff
-DNA
-Blood
-Freezer
-Test
