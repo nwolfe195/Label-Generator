@@ -1,0 +1,8 @@
+Sample_Types	Index
+Serum	01
+Plasma	02
+Buff	03
+DNA	04
+Blood	05
+Freezer	06
+Test	99
