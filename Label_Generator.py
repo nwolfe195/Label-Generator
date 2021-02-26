@@ -15,7 +15,8 @@ class LabelGenerator:
         self.cursor = self.connection.cursor()
 
         self.protocols = pd.read_csv(protocols, sep='\t', dtype=str)
-        self.sample_types = pd.read_csv(sample_types, sep='\t', dtype=str)
+        self.sample_type_file = sample_types
+        self.sample_types = pd.read_csv(self.sample_type_file, sep='\t', dtype=str)
 
     def disconnect(self):
         self.connection.close()
@@ -86,3 +87,59 @@ class LabelGenerator:
         f.close()
 
         return filename
+
+    def add_new_sample_type(self, new_sample_type):
+        print('Creating a new sample type: %s' % new_sample_type)
+        current_protocols = self.get_current_protocols()
+        print('Current protocols: %s' % current_protocols)
+        current_sample_types = self.get_current_sample_types()
+        print('Current sample types: %s' % current_sample_types)
+        last_sampletype = current_sample_types[-2]
+        print('Last sample type: %s' % last_sampletype)
+        next_sample_type = self.get_next_sample_type(last_sampletype)
+        print('Next sample type: %s' % next_sample_type)
+        digit_count = self.get_digit_count()
+        print('Digit count: %d' % digit_count)
+        max_number = 10 ** digit_count
+        print('Max number: %d' % max_number)
+
+        print(self.sample_types)
+        self.sample_types = self.sample_types.append({'Sample_Types':new_sample_type, 'Index':next_sample_type},
+                                                     ignore_index=True).sort_values(by=['Index'])
+        self.sample_types.to_csv(self.sample_type_file, sep='\t', index=False)
+        print(self.sample_types)
+
+        digits = list(range(0, max_number))
+        zeroed_digits = [str(item).zfill(digit_count) for item in digits]
+        label_ids = list(itertools.product(current_protocols, [next_sample_type], zeroed_digits))
+        label_ids_merged = list(map(lambda x: ''.join(x), label_ids))
+        labels_df = pd.DataFrame(label_ids_merged, columns=['LabelID'])
+        labels_df['Used'] = 0
+        labels_df['UseDate'] = np.NaN
+        labels_df.to_sql('Labels', self.connection, if_exists='append', index=False)
+        
+        return ['Added new sample code %s for sample type %s' % (next_sample_type, new_sample_type)]
+
+    def get_current_protocols(self):
+        current_studies_query = 'SELECT DISTINCT SUBSTR(LabelID, 1, 3) AS Studies FROM Labels'
+        current_studies = pd.read_sql_query(current_studies_query, self.connection)['Studies'].tolist()
+        return current_studies
+
+    def get_current_sample_types(self):
+        current_sample_types_query = 'SELECT DISTINCT SUBSTR(LabelID, 4, 2) AS SampleTypes FROM Labels ORDER BY SampleTypes'
+        current_sample_types = pd.read_sql_query(current_sample_types_query, self.connection)['SampleTypes'].tolist()
+        return current_sample_types
+
+    def get_next_sample_type(self, last_sampletype):
+        next_sampletype_int = int(last_sampletype)+1
+        if len(str(next_sampletype_int)) == 1:
+            next_sampletype_string = '0%d' % next_sampletype_int
+        else:
+            next_sampletype_string = str(next_sampletype_int)
+        return next_sampletype_string
+
+    def get_digit_count(self):
+        example_query = 'SELECT LabelID FROM Labels LIMIT 1'
+        example = pd.read_sql_query(example_query, self.connection)['LabelID'].tolist()[0]
+        digits = len(example)-5
+        return digits

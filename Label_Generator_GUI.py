@@ -17,6 +17,7 @@ class LabelGeneratorGUI:
         self.protocol = StringVar(self.root)
         self.sample_type = StringVar(self.root)
         self.page_count = IntVar(self.root)
+        self.new_sample_type = StringVar(self.root)
 
         self.create_components()
 
@@ -43,8 +44,13 @@ class LabelGeneratorGUI:
         # Create GUI Get Labels Button
         Button(self.root, text='Get Labels', command=self.create_labels).grid(row=4, column=1)
 
+        # Create GUI Create New Sample Types
+        Label(self.root, text='Add a New Sample Type', width=30, anchor='w').grid(row=5, column=0)
+        Entry(self.root, textvariable=self.new_sample_type).grid(row=5, column=1)
+        Button(self.root, text='Create New Sample Type', command=self.create_new_sample_type).grid(row=6, column=1)
+
         # Create GUI Exit Button
-        Button(self.root, text='Exit', command=self.exit).grid(row=5, column=0)
+        Button(self.root, text='Exit', command=self.exit).grid(row=7, column=0)
 
     def create_labels(self):
         message = self.label_generator.generate_labels(self.page_count.get(), self.protocol.get(), self.sample_type.get())
@@ -61,6 +67,10 @@ class LabelGeneratorGUI:
     def exit(self):
         self.label_generator.disconnect()
         self.root.destroy()
+
+    def create_new_sample_type(self):
+        message = self.label_generator.add_new_sample_type(self.new_sample_type.get())
+        self.popup_message(message)
 
 
 root = Tk()
