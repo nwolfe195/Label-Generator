@@ -1,0 +1,2 @@
+path	database_file	protocol_file	sample_types_file
+C:/Users/nicho/Documents/Work/VA/Coding_Projects/Label-Generator/	Production_Database.db	Production_Protocols.txt	Production_Sample_Types.txt

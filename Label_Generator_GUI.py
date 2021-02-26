@@ -74,7 +74,7 @@ class LabelGeneratorGUI:
 
 
 root = Tk()
-configuration_file = 'Configuration.txt'
+configuration_file = 'Production_Configuration.txt'
 configuration = pd.read_csv(configuration_file, sep='\t')
 
 interface = LabelGeneratorGUI(root, configuration['path'][0], configuration['database_file'][0],

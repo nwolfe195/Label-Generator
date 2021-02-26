@@ -1,2 +1,0 @@
-path	database_file	protocol_file	sample_types_file
-C:/Users/nicho/Documents/Work/VA/Coding_Projects/Label-Generator/	Development_Database.db	Protocols.txt	Sample_Types.txt
