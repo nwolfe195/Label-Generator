@@ -5,4 +5,35 @@ Buff	03
 DNA	04
 Blood	05
 Freezer	06
+Blood-RNA	07
+NP Swab	08
+OP Swab	09
+PBMC	10
+Plasma (Citrate)	11
+Plasma (EDTA)	12
+Plasma (Heparin)	13
+Residual Blood	14
+Residual CSF	15
+Residual NP Swab	16
+Residual OP Swab	17
+Residual Other	18
+Residual Rectal Swab	19
+Residual Saliva	20
+Residual Sputum	21
+Residual Stool	22
+Residual Tissue	23
+Residual Urine	24
+Saliva	25
+Sputum	26
+Stool	27
+Urine	28
+Blue-Top (Citrate)	29
+Gold-Top (SST)	30
+Purple-Top (EDTA)	31
+PAXgene Tube	32
+Respiratory Specimen	33
+Sterile Cup	34
+Self-Collection	35
+Other	36
+Residual	37
 Test	99
